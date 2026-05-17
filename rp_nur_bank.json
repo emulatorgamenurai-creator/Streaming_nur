@@ -1,0 +1,48 @@
+{
+    "system_stats": {
+        "total_burned": 0
+    },
+    "members": {
+        "IMC-001": {
+            "balance_koin": 2000,
+            "balance_gif": 1000,
+            "vvip_level": "Gold",
+            "history": []
+        },
+        "IMC-005": {
+            "balance_koin": 1000,
+            "balance_gif": 500,
+            "vvip_level": "Silver",
+            "history": []
+        },
+        "IC-INT-007": {
+            "nama": "Member IC-INT-007",
+            "wilayah": "Internasional",
+            "balance_koin": 5000,
+            "balance_gif": 0,
+            "balance_celengan": 0,
+            "vvip_level": "Silver",
+            "history": []
+        },
+        "IC-INT-888": {
+            "nama": "Member IC-INT-888",
+            "wilayah": "Internasional",
+            "balance_koin": 0,
+            "balance_gif": 0,
+            "balance_celengan": 11000,
+            "lencana_celengan": "\ud83c\udfc6 Sultan Celengan",
+            "vvip_level": "Silver",
+            "history": []
+        },
+        "IC-NEW-007": {
+            "nama": "Member IC-NEW-007",
+            "wilayah": "Lokal",
+            "balance_koin": 0,
+            "balance_gif": 0,
+            "balance_celengan": 5500,
+            "lencana_celengan": "\ud83c\udf1f Master Celengan",
+            "vvip_level": "Silver",
+            "history": []
+        }
+    }
+}
