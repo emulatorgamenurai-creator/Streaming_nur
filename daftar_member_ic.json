@@ -1,0 +1,26 @@
+{
+    "IC-001": {
+        "nama": "Kurnadi",
+        "wilayah": "Dalam Negeri",
+        "status": "Aktif",
+        "terakhir_diupdate": "2026-05-17 01:06:29"
+    },
+    "IC-002": {
+        "nama": "Imahazzah",
+        "wilayah": "Dalam Negeri",
+        "status": "Aktif",
+        "terakhir_diupdate": "2026-05-17 01:06:29"
+    },
+    "IC-003": {
+        "nama": "Ahmad",
+        "wilayah": "Hong Kong",
+        "status": "Aktif",
+        "terakhir_diupdate": "2026-05-17 01:06:29"
+    },
+    "IC-004": {
+        "nama": "Siti",
+        "wilayah": "Taiwan",
+        "status": "Aktif",
+        "terakhir_diupdate": "2026-05-17 01:06:29"
+    }
+}
