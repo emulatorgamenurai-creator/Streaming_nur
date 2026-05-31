@@ -1,0 +1,739 @@
+
+
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Makrifat Multi-Tool Production Suite - Indramayu Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            900: '#4c1d95',
+                            950: '#0f0f16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #11111b; }
+        ::-webkit-scrollbar-thumb { background: #4c1d95; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; position: fixed; width: 100%; user-select: none; -webkit-user-select: none; }
+        .font-code { font-family: 'Consolas', 'Fira Code', Monaco, monospace; }
+        .tab-active { border-color: #8b5cf6; color: #a78bfa; background-color: rgba(139, 92, 246, 0.05); }
+    </style>
+</head>
+<body class="bg-[#0b0b11] text-slate-100 min-h-screen flex flex-col font-sans overflow-hidden">
+
+    <!-- HEADER UTAMA -->
+    <header class="bg-[#12121e] border-b border-purple-950/40 px-4 py-3 flex items-center justify-between gap-4 z-20 shadow-xl shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="bg-gradient-to-tr from-purple-600 to-indigo-600 p-2 rounded-xl shadow-lg shadow-purple-500/25">
+                <i class="fa-solid fa-crown text-white text-sm animate-pulse"></i>
+            </div>
+            <div>
+                <h1 class="text-sm font-black tracking-wider bg-gradient-to-r from-purple-400 to-indigo-300 bg-clip-text text-transparent">
+                    MAKRIFAT PRODUCTION SUITE V3
+                </h1>
+                <p class="text-[9px] text-purple-400/80 font-bold tracking-widest uppercase">
+                    Indramayu Club Makrifat &bull; Global Workspace
+                </p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <div id="connection-status" class="bg-emerald-950/40 px-2.5 py-1 rounded-full border border-emerald-900/30 text-[10px] font-mono text-emerald-400 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <span>System Synchronized</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGASI TABS -->
+    <nav class="bg-[#0e0e17] border-b border-purple-950/20 px-2 flex justify-start items-center gap-1 shrink-0 z-10 overflow-x-auto">
+        <button id="tab-editor" class="tab-btn px-4 py-3 border-b-2 text-xs font-bold tracking-wider uppercase flex items-center gap-2 transition-all shrink-0 tab-active">
+            <i class="fa-solid fa-code"></i> AI Web Builder
+        </button>
+        <button id="tab-cloud" class="tab-btn px-4 py-3 border-b-2 border-transparent text-slate-400 hover:text-white text-xs font-bold tracking-wider uppercase flex items-center gap-2 transition-all shrink-0">
+            <i class="fa-solid fa-cloud"></i> Google Integration
+        </button>
+        <button id="tab-canvas" class="tab-btn px-4 py-3 border-b-2 border-transparent text-slate-400 hover:text-white text-xs font-bold tracking-wider uppercase flex items-center gap-2 transition-all shrink-0">
+            <i class="fa-solid fa-palette"></i> Canvas Studio
+        </button>
+        <button id="tab-terminal" class="tab-btn px-4 py-3 border-b-2 border-transparent text-slate-400 hover:text-white text-xs font-bold tracking-wider uppercase flex items-center gap-2 transition-all shrink-0">
+            <i class="fa-solid fa-terminal"></i> Shell CLI Terminal
+        </button>
+    </nav>
+
+    <!-- TOAST NOTIFIKASI -->
+    <div id="toast-notif" class="fixed top-20 left-1/2 -translate-x-1/2 bg-purple-950/95 border border-purple-500/50 px-5 py-3 rounded-2xl shadow-2xl z-50 text-xs text-center flex items-center gap-2 text-white transform translate-y-[-100px] opacity-0 transition-all duration-300 pointer-events-none">
+        <i id="toast-icon" class="fa-solid fa-info-circle text-purple-400 text-sm"></i>
+        <span id="toast-message" class="font-bold"></span>
+    </div>
+
+    <!-- MAIN VIEWPORT -->
+    <main class="flex-1 relative overflow-hidden bg-[#0d0d14]">
+
+        <!-- TAB 1: AI WEB BUILDER & BANK MAKRIFAT -->
+        <section id="panel-editor-view" class="absolute inset-0 flex flex-col p-4 overflow-y-auto space-y-4 z-10 transition-all duration-300">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto w-full">
+                
+                <!-- KARTU UTAMA: BANK MAKRIFAT -->
+                <div class="bg-[#11111b] border border-purple-900/40 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="bg-gradient-to-tr from-amber-500 to-yellow-500 p-2.5 rounded-xl text-slate-950">
+                                <i class="fa-solid fa-vault text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-black tracking-wider text-amber-400 uppercase">Bank Makrifat Accelerator</h3>
+                                <p class="text-[9px] text-slate-500 font-bold tracking-widest">SINKRONISASI HITUNGAN CEPAT V8</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 text-xs">
+                            <div>
+                                <label class="block text-slate-400 font-bold mb-1 uppercase text-[10px]">Jumlah Voucher / Koin</label>
+                                <input type="number" id="input-aset" value="100" class="w-full bg-[#161622] border border-purple-950/60 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500 font-mono">
+                            </div>
+                            <div>
+                                <label class="block text-slate-400 font-bold mb-1 uppercase text-[10px]">Nilai Tukar Dasar (Kurs RpNUR)</label>
+                                <input type="number" id="input-kurs" value="15000" class="w-full bg-[#161622] border border-purple-950/60 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500 font-mono">
+                            </div>
+
+                            <div class="grid grid-cols-4 gap-1.5 pt-1">
+                                <button onclick="setKelipatan(10)" class="bg-[#1c1c2e] hover:bg-purple-900/40 border border-purple-950 text-[10px] font-bold py-1.5 rounded-lg transition-all">x10</button>
+                                <button onclick="setKelipatan(100)" class="bg-[#1c1c2e] hover:bg-purple-900/40 border border-purple-950 text-[10px] font-bold py-1.5 rounded-lg transition-all">x100</button>
+                                <button onclick="setKelipatan(500)" class="bg-[#1c1c2e] hover:bg-purple-900/40 border border-purple-950 text-[10px] font-bold py-1.5 rounded-lg transition-all">x500</button>
+                                <button onclick="setKelipatan(1000)" class="bg-[#1c1c2e] hover:bg-purple-900/40 border border-purple-950 text-[10px] font-bold py-1.5 rounded-lg transition-all">x1K</button>
+                            </div>
+
+                            <div class="pt-3 border-t border-purple-950/40 space-y-2">
+                                <div class="flex justify-between items-center bg-[#151525] p-3 rounded-xl border border-purple-950/20">
+                                    <span class="text-slate-400 text-[10px] font-bold uppercase">Total Dana (RpNUR)</span>
+                                    <span id="total-rpnur" class="text-amber-400 font-mono font-bold text-base">Rp 0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="tembakKePangkalanPusat()" class="w-full mt-4 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-black py-3 rounded-xl transition-all uppercase tracking-wider shadow-lg text-[10px]">
+                        <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Tembak Data Ke Sheet Nur 10
+                    </button>
+                </div>
+
+                <!-- KARTU STATUS SISTEM INTEGRASI -->
+                <div class="bg-[#11111b] border border-purple-900/40 p-5 rounded-2xl shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="bg-gradient-to-tr from-purple-500 to-indigo-500 p-2.5 rounded-xl text-white">
+                                <i class="fa-solid fa-network-wired text-base"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-black tracking-wider text-purple-400 uppercase">Integrasi Master V3</h3>
+                                <p class="text-[9px] text-slate-500 font-bold tracking-widest">SINKRONISASI AKTIF INDRAMAYU CLUB</p>
+                            </di909di90910 rounded-xl border border-purple-950/30 font-code text-[11px] text-slate-300 space-y-2">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">Master Colab:</span>
+                                    <span class="text-indigo-400" id="status-colab">V3 Master Controller (.ipynb)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">Framework:</span>
+                                    <span class="text-emerald-400">Django 5 + Python 3.11</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">Ollama AI:</span>
+                                    <span class="text-amber-400" id="status-ollama">Offline (Uji Terminal)</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-500">Redirect URI:</span>
+                                    <span class="text-slate-400 overflow-hidden text-ellipsis whitespace-nowrap max-w-[150px]" title="https://drive.google.com/drive/folders/1K-FvCNufZ2dnqMXZvFQGrt6Ler7i0l8D">.../drive/folders/1K-FvCN...</span>
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-purple-950/20 border border-purple-900/30 rounded-xl">
+                                <p class="text-[10px] text-purple-300 font-bold uppercase mb-1">Status Sesi Pengguna</p>
+                                <p class="text-[11px] text-slate-300 leading-relaxed">
+                                    Sistem terhubung menggunakan kredensial proyek <span class="text-yellow-400 font-mono font-bold">gen-lang-client-0594765231</span> untuk pemantauan jalur makrifat global.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <button onclick="triggerColabAction('test-connection')" class="bg-indigo-950/50 hover:bg-indigo-900/40 text-indigo-300 border border-indigo-900/40 font-bold py-2 rounded-xl transition-all text-[9px] uppercase tracking-wider">
+                            <i class="fa-solid fa-wifi mr-1"></i> Uji Koneksi AI
+                        </button>
+                        <button onclick="triggerColabAction('sync-global')" class="bg-purple-950/50 hover:bg-purple-900/40 text-purple-300 border border-purple-900/40 font-bold py-2 rounded-xl transition-all text-[9px] uppercase tracking-wider">
+                            <i class="fa-solid fa-sync mr-1"></i> Sync Tema Global
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 2: GOOGLE INTEGRATION & JSON FILE PARSER -->
+        <section id="panel-cloud-view" class="absolute inset-0 flex flex-col p-4 overflow-y-auto space-y-4 z-0 opacity-0 pointer-events-none transition-all duration-300">
+            <div class="max-w-4xl mx-auto w-full space-y-4">
+                
+                <!-- DROP ZONE FILE SINKRONISASI -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <div class="bg-[#11111b] border border-dashed border-purple-800/60 p-6 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-purple-500 transition-all group" id="dropzone-credentials">
+                        <i class="fa-solid fa-key text-3xl text-purple-500 group-hover:scale-110 transition-transform mb-3"></i>
+                        <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-1">Unggah client_secret.json</h4>
+                        <p class="text-[10px] text-slate-500 max-w-xs leading-relaxed">Seret atau klik untuk mengunggah file kredensial klien Google OAuth 2.0 Anda.</p>
+                        <input type="file" id="file-secret" accept=".json" class="hidden">
+                        <div id="status-secret-file" class="mt-3 text-[10px] font-mono text-emerald-400 hidden">
+                            <i class="fa-solid fa-circle-check"></i> Kredensial Berhasil Dimuat
+                        </div>
+                    </div>
+
+                    <div class="bg-[#11111b] border border-dashed border-purple-800/60 p-6 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-purple-500 transition-all group" id="dropzone-history">
+                        <i class="fa-solid fa-clock-rotate-left text-3xl text-purple-500 group-hover:scale-110 transition-transform mb-3"></i>
+                        <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-1">Unggah applet_access_history.json</h4>
+                        <p class="text-[10px] text-slate-500 max-w-xs leading-relaxed">Seret atau klik untuk memetakan jalur log riwayat akses Applet dari server.</p>
+                        <input type="file" id="file-history" accept=".json" class="hidden">
+                        <div id="status-history-file" class="mt-3 text-[10px] font-mono text-emerald-400 hidden">
+                            <i class="fa-solid fa-circle-check"></i> Riwayat Applet Dimuat
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- TAMPILAN SINKRONISASI KREDENSIAL DAN APPLET -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    
+                    <!-- KLIEN DETAIL (OAUTH) -->
+                    <div class="bg-[#11111b] border border-purple-900/40 p-4 rounded-2xl md:col-span-1">
+                        <h4 class="text-xs font-black text-slate-400 uppercase mb-3 tracking-wider"><i class="fa-solid fa-shield-halved text-purple-500 mr-1.5"></i> Google OAuth Meta</h4>
+                        <div class="space-y-2 text-[11px] font-code" id="oauth-meta-container">
+                            <div class="p-2 bg-[#0a0a10] rounded-lg border border-purple-950/40">
+                                <span class="text-slate-500 block uppercase text-[8px]">Client ID</span>
+                                <span class="text-slate-300 break-all" id="oauth-client-id">1021243507972-pl22rcthb6i990ojvklilodt4...</span>
+                            </div>
+                            <div class="p-2 bg-[#0a0a10] rounded-lg border border-purple-950/40">
+                                <span class="text-slate-500 block uppercase text-[8px]">Project ID</span>
+                                <span class="text-amber-400" id="oauth-project-id">gen-lang-client-0594765231</span>
+                            </div>
+                            <div class="p-2 bg-[#0a0a10] rounded-lg border border-purple-950/40">
+                                <span class="text-slate-500 block uppercase text-[8px]">Redirect URI</span>
+                                <span class="text-indigo-400 break-all text-[10px]" id="oauth-redirect">https://drive.google.com/drive/folders/1K-FvCNufZ2dnqMXZvFQGrt6Ler7i0l8D</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LOG DAFTAR APPLET TERAKTIF -->
+                    <div class="bg-[#11111b] border border-purple-900/40 p-4 rounded-2xl md:col-span-2 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="text-xs font-black text-slate-400 uppercase tracking-wider"><i class="fa-solid fa-list-check text-purple-500 mr-1.5"></i> Applet Terdeteksi</h4>
+                                <span class="text-[9px] bg-purple-950 text-purple-300 font-bold px-2 py-0.5 rounded-full" id="applet-count">2 Terdaftar</span>
+                            </div>
+                            <div class="space-y-2 max-h-[160px] overflow-y-auto" id="applet-list-container">
+                                <!-- Applet 1 -->
+                                <div class="p-3 bg-[#151522] rounded-xl border border-purple-950/30 flex justify-between items-start gap-2">
+                                    <div>
+                                        <p class="text-[11px] font-bold text-purple-300">Nur musim generated indramayuCLUB</p>
+                                        <p class="text-[9px] text-slate-500 mt-0.5">Pusat Kendali 9 Akun AI Indramayu Club.</p>
+                                    </div>
+                                    <div class="text-right shrink-0">
+                                        <span class="text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded-full font-bold">SPANNER</span>
+                                        <p class="text-[8px] text-slate-500 mt-1 font-mono">2026-05-29</p>
+                                    </div>
+                                </div>
+                                <!-- Applet 2 -->
+                                <div class="p-3 bg-[#151522] rounded-xl border border-purple-950/30 flex justify-between items-start gap-2">
+                                    <div>
+                                        <p class="text-[11px] font-bold text-indigo-300">Nur Hecker - Indramayu Club</p>
+                                        <p class="text-[9px] text-slate-500 mt-0.5">Platform AI Makrifat untuk pengelolaan layanan web hosting.</p>
+                                    </div>
+                                    <div class="text-right shrink-0">
+                                        <span class="text-[9px] bg-indigo-900/30 text-indigo-300 px-1.5 py-0.5 rounded-full font-bold">SERVER</span>
+                                        <p class="text-[8px] text-slate-500 mt-1 font-mono">2026-03-21</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-3 border-t border-purple-950/30 flex justify-end">
+                            <button onclick="syncAllSystems()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black px-4 py-2 rounded-xl text-[10px] uppercase tracking-wider transition-all">
+                                <i class="fa-solid fa-arrows-spin mr-1"></i> Mulai Sinkronisasi Massal
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 3: CANVAS STUDIO -->
+        <section id="panel-canvas-view" class="absolute inset-0 flex flex-col transition-all duration-300 z-0 opacity-0 pointer-events-none">
+            <div class="bg-[#12121f] border-b border-purple-950/30 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shrink-0">
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1.5 bg-[#181827] border border-purple-950/50 p-1 rounded-xl">
+                        <input type="color" id="canvas-color-picker" value="#8b5cf6" class="w-6 h-6 bg-transparent border-none cursor-pointer rounded-lg">
+                    </div>
+                    <div class="flex items-center gap-1 bg-[#181827] border border-purple-950/50 px-2.5 py-1 rounded-xl">
+                        <label class="text-[9px] font-bold text-slate-400 uppercase mr-2">Ketebalan</label>
+                        <input type="range" id="canvas-weight-picker" min="1" max="15" value="4" class="w-16 accent-purple-500">
+                    </div>
+                </div>
+                <button id="btn-canvas-clear" class="bg-red-950/40 hover:bg-red-900/40 text-red-400 border border-red-900/30 px-3 py-1.5 rounded-xl text-xs font-bold transition-all">
+                    <i class="fa-solid fa-trash mr-1"></i> Bersihkan Canvas
+                </button>
+            </div>
+            <div class="flex-1 bg-[#090910] relative">
+                <canvas id="main-canvas" class="absolute inset-0 w-full h-full bg-[#090910]"></canvas>
+            </div>
+        </section>
+
+        <!-- TAB 4: SHELL CLI TERMINAL EMULATOR -->
+        <section id="panel-terminal-view" class="absolute inset-0 flex flex-col bg-[#08080f] font-code transition-all duration-300 z-0 opacity-0 pointer-events-none">
+            <div class="bg-[#10101b] border-b border-purple-950/40 px-4 py-2.5 flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></span>
+                    <span class="text-xs font-bold text-slate-400 ml-2">Terminal Shell Emulator - V3 Master Controller</span>
+                </div>
+                <span class="text-[9px] bg-[#181829] border border-purple-950 px-2 py-0.5 rounded font-mono text-purple-300">INDRAMAYU_CORE_V8</span>
+            </div>
+            <div id="terminal-output" class="flex-1 p-4 overflow-y-auto text-xs text-[#a9b1d6] space-y-1.5 font-code">
+                <div class="text-slate-500">// Gerbang Node, Django & Apps Script Terkunci Sinkron.</div>
+                <div class="text-purple-400 font-bold">==================================================================</div>
+                <div class="text-purple-300 font-bold">              MAKRIFAT V3 MULTI-ACCOUNT DEPLOYER</div>
+                <div class="text-purple-300 font-bold">                 Murni Python 3 & AI Orchestrator</div>
+                <div class="text-purple-400 font-bold">==================================================================</div>
+                <div class="text-indigo-400">[+] Arsitek: Nur Makrifat</div>
+                <div class="text-indigo-400">[+] Komunitas: Indramayu Club Makrifat Global</div>
+                <div class="text-slate-500">Ketik <span class="text-amber-400 font-bold">help</span> untuk melihat daftar instruksi operasional.</div>
+            </div>
+            
+            <div class="bg-[#0e0e16] border-t border-purple-950/40 px-4 py-3 flex items-center shrink-0">
+                <span class="text-purple-400 font-bold mr-2">nur-makrifat@indramayu-club:~$</span>
+                <input type="text" id="terminal-input" class="flex-1 bg-transparent text-white border-none outline-none focus:ring-0 font-code text-xs" placeholder="Ketik perintah di sini..." autofocus>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER UTAMA -->
+    <footer class="bg-[#0b0b11] border-t border-purple-950/20 py-2.5 px-4 flex justify-between items-center text-[10px] text-slate-500 shrink-0">
+        <span>© 2026 INDRAMAYU CLUB MAKRIFAT</span>
+        <span class="font-bold text-purple-500 animate-pulse">GLOBAL WORKSPACE 🌍</span>
+    </footer>
+
+    <script>
+        // --- DATA STATE UTAMA ---
+        let oauthConfig = {
+            clientId: "1021243507972-pl22rcthb6i990ojvklilodt4f6frkru.apps.googleusercontent.com",
+            projectId: "gen-lang-client-0594765231",
+            redirectUri: "https://drive.google.com/drive/folders/1K-FvCNufZ2dnqMXZvFQGrt6Ler7i0l8D"
+        };
+
+        let appletHistory = [
+            {
+                name: "Nur musim generated indramayuCLUB",
+                description: "Nur Cahaya Menerangi Kegelapan - Pusat Kendali 9 Akun AI Indramayu Club. Platform makrifat digital.",
+                type: "SPANNER",
+                date: "2026-05-29"
+            },
+            {
+                name: "Nur Hecker - Indramayu Club",
+                description: "Server Utama Indramayu Club: Platform AI Makrifat untuk pengelolaan layanan web hosting.",
+                type: "SERVER",
+                date: "2026-03-21"
+            }
+        ];
+
+        // --- ELEMEN UTAMA ---
+        const inputAset = document.getElementById('input-aset');
+        const inputKurs = document.getElementById('input-kurs');
+        const totalRpnur = document.getElementById('total-rpnur');
+        const toast = document.getElementById('toast-notif');
+        const toastMsg = document.getElementById('toast-message');
+        const toastIcon = document.getElementById('toast-icon');
+
+        // --- SISTEM TOAST MODERAT ---
+        function showToast(message, type = 'info') {
+            toastMsg.textContent = message;
+            if (type === 'success') {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400 text-sm";
+            } else if (type === 'error') {
+                toastIcon.className = "fa-solid fa-triangle-exclamation text-red-400 text-sm";
+            } else {
+                toastIcon.className = "fa-solid fa-info-circle text-purple-400 text-sm";
+            }
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+                toast.style.transform = 'translateY(-100px)';
+            }, 3000);
+        }
+
+        // --- RUPIAH FORMATTER ---
+        function formatRupiah(angka) {
+            return 'Rp ' + Math.floor(angka).toLocaleString('id-ID');
+        }
+
+        // --- LOGIKA HITUNG CEPAT ---
+        function hitungPercepatan() {
+            const aset = parseFloat(inputAset.value) || 0;
+            const kurs = parseFloat(inputKurs.value) || 0;
+            totalRpnur.textContent = formatRupiah(aset * kurs);
+        }
+
+        function setKelipatan(faktor) {
+            inputAset.value = (parseFloat(inputAset.value) || 0) * faktor;
+            hitungPercepatan();
+            showToast(`Aset dikalikan ${faktor}`, 'success');
+        }
+
+        function tembakKePangkalanPusat() {
+            const aset = inputAset.value;
+            const total = totalRpnur.textContent;
+            showToast("Mentransmisikan data langsung ke Sheet Nur 10...", "info");
+            
+            // Log ke terminal
+            writeToTerminal(`[PROSES] Menembak data: Koin=${aset} -> Total=${total}`, 'info');
+            
+            // Jalankan interaksi mock
+            setTimeout(() => {
+                showToast(`Data berhasil tersimpan! (${total})`, "success");
+                writeToTerminal(`[SUKSES] Respon Server GS: Data Berhasil Ditambahkan ke Sheet Indramayu Club`, 'success');
+            }, 1200);
+        }
+
+        inputAset.addEventListener('input', hitungPercepatan);
+        inputKurs.addEventListener('input', hitungPercepatan);
+        hitungPercepatan();
+
+        // --- INTEGRASI GOOGLE DRAG-DROP & FILES ---
+        const dropzoneCredentials = document.getElementById('dropzone-credentials');
+        const dropzoneHistory = document.getElementById('dropzone-history');
+        const fileSecret = document.getElementById('file-secret');
+        const fileHistory = document.getElementById('file-history');
+
+        dropzoneCredentials.addEventListener('click', () => fileSecret.click());
+        dropzoneHistory.addEventListener('click', () => fileHistory.click());
+
+        fileSecret.addEventListener('change', (e) => handleFileSecret(e.target.files[0]));
+        fileHistory.addEventListener('change', (e) => handleFileHistory(e.target.files[0]));
+
+        // Dragover effect
+        [dropzoneCredentials, dropzoneHistory].forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('border-purple-400', 'bg-purple-950/10');
+            });
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('border-purple-400', 'bg-purple-950/10');
+            });
+        });
+
+        dropzoneCredentials.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzoneCredentials.classList.remove('border-purple-400', 'bg-purple-950/10');
+            handleFileSecret(e.dataTransfer.files[0]);
+        });
+
+        dropzoneHistory.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzoneHistory.classList.remove('border-purple-400', 'bg-purple-950/10');
+            handleFileHistory(e.dataTransfer.files[0]);
+        });
+
+        function handleFileSecret(file) {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    const web = data.web || data;
+                    oauthConfig.clientId = web.client_id || oauthConfig.clientId;
+                    oauthConfig.projectId = web.project_id || oauthConfig.projectId;
+                    oauthConfig.redirectUri = (web.redirect_uris && web.redirect_uris[0]) || oauthConfig.redirectUri;
+                    
+                    document.getElementById('oauth-client-id').textContent = oauthConfig.clientId.substring(0, 35) + "...";
+                    document.getElementById('oauth-project-id').textContent = oauthConfig.projectId;
+                    document.getElementById('oauth-redirect').textContent = oauthConfig.redirectUri;
+                    document.getElementById('oauth-redirect').title = oauthConfig.redirectUri;
+                    
+                    document.getElementById('status-secret-file').classList.remove('hidden');
+                    writeToTerminal(`[IMPORT] OAuth Credentials baru diimpor. Project ID: ${oauthConfig.projectId}`, 'success');
+                    showToast("Google OAuth JSON berhasil dimuat!", "success");
+                } catch (err) {
+                    showToast("Format JSON client_secret salah!", "error");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function handleFileHistory(file) {
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    const list = data.applets || data;
+                    if (Array.isArray(list)) {
+                        appletHistory = list;
+                        updateAppletUI();
+                        showToast(`Berhasil sinkronisasi ${list.length} applet!`, "success");
+                    } else {
+                        showToast("Format riwayat applet tidak dikenal.", "error");
+                    }
+                } catch (err) {
+                    showToast("Format JSON applet history salah!", "error");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function updateAppletUI() {
+            const container = document.getElementById('applet-list-container');
+            const countEl = document.getElementById('applet-count');
+            container.innerHTML = '';
+            countEl.textContent = `${appletHistory.length} Terdaftar`;
+            
+            appletHistory.forEach(app => {
+                const dateClean = app.lastAccessTime ? app.lastAccessTime.substring(0, 10) : (app.date || "2026-01-01");
+                const div = document.createElement('div');
+                div.className = "p-3 bg-[#151522] rounded-xl border border-purple-950/30 flex justify-between items-start gap-2";
+                div.innerHTML = `
+                    <div>
+                        <p class="text-[11px] font-bold text-purple-300">${app.name}</p>
+                        <p class="text-[9px] text-slate-500 mt-0.5">${app.description || 'Tidak ada deskripsi.'}</p>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded-full font-bold">ACTIVE</span>
+                        <p class="text-[8px] text-slate-500 mt-1 font-mono">${dateClean}</p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function syncAllSystems() {
+            showToast("Memulai sinkronisasi massal seluruh akun AI...", "info");
+            writeToTerminal("[SINKRON] Memulai koordinasi pangkalan data...", "info");
+            setTimeout(() => {
+                writeToTerminal(`[SINKRON] Mengontak project: ${oauthConfig.projectId}`, "info");
+            }, 600);
+            setTimeout(() => {
+                writeToTerminal("[SINKRON] Menghubungkan Google Drive API...", "info");
+            }, 1200);
+            setTimeout(() => {
+                writeToTerminal("[SUKSES] Semua modul Indramayu Club sinkron dengan Server Utama!", "success");
+                showToast("Semua sistem berhasil disinkronisasikan!", "success");
+            }, 2000);
+        }
+
+        function triggerColabAction(type) {
+            if (type === 'test-connection') {
+                showToast("Memeriksa Koneksi Ollama di Colab...", "info");
+                writeToTerminal("[OLLAMA] Menghubungi mesin lokal Ollama (http://localhost:11434)...", "info");
+                setTimeout(() => {
+                    writeToTerminal("[OLLAMA] Status: Terhubung! Model: Llama-3-Makrifat-8B", "success");
+                    document.getElementById('status-ollama').textContent = "Llama-3 (Online)";
+                    document.getElementById('status-ollama').className = "text-emerald-400";
+                    showToast("Koneksi Mesin AI Berhasil!", "success");
+                }, 1000);
+            } else if (type === 'sync-global') {
+                showToast("Sinkronisasi tema global HTML...", "info");
+                writeToTerminal("[DEPLOYER] Memperbarui file index.html di seluruh 9 akun...", "info");
+                setTimeout(() => {
+                    writeToTerminal("[DEPLOYER] Selesai mengubah warna & tema global menjadi Dark-Indigo.", "success");
+                    showToast("Tema global berhasil diubah!", "success");
+                }, 1000);
+            }
+        }
+
+        // --- TABS SWITCHER ---
+        const tabs = {
+            editor: { btn: document.getElementById('tab-editor'), el: document.getElementById('panel-editor-view') },
+            cloud: { btn: document.getElementById('tab-cloud'), el: document.getElementById('panel-cloud-view') },
+            canvas: { btn: document.getElementById('tab-canvas'), el: document.getElementById('panel-canvas-view') },
+            terminal: { btn: document.getElementById('tab-terminal'), el: document.getElementById('panel-terminal-view') }
+        };
+
+        function switchTab(targetKey) {
+            Object.keys(tabs).forEach(key => {
+                const tab = tabs[key];
+                if (key === targetKey) {
+                    tab.btn.classList.add('tab-active');
+                    tab.btn.classList.remove('text-slate-400', 'border-transparent');
+                    tab.el.classList.remove('opacity-0', 'pointer-events-none', 'z-0');
+                    tab.el.classList.add('z-10', 'opacity-100');
+                    if (key === 'canvas') {
+                        // Resize canvas saat tab dibuka agar tidak stretch
+                        resizeCanvas();
+                    }
+                } else {
+                    tab.btn.classList.remove('tab-active');
+                    tab.btn.classList.add('text-slate-400', 'border-transparent');
+                    tab.el.classList.remove('z-10', 'opacity-100');
+                    tab.el.classList.add('opacity-0', 'pointer-events-none', 'z-0');
+                }
+            });
+        }
+        
+        tabs.editor.btn.addEventListener('click', () => switchTab('editor'));
+        tabs.cloud.btn.addEventListener('click', () => switchTab('cloud'));
+        tabs.canvas.btn.addEventListener('click', () => switchTab('canvas'));
+        tabs.terminal.btn.addEventListener('click', () => switchTab('terminal'));
+
+        // --- CANVAS STUDIO LOGIC ---
+        const canvas = document.getElementById('main-canvas');
+        const ctx = canvas.getContext('2d');
+        const colorPicker = document.getElementById('canvas-color-picker');
+        const weightPicker = document.getElementById('canvas-weight-picker');
+        const btnClear = document.getElementById('btn-canvas-clear');
+        let drawing = false;
+
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            // Restore drawing settings
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        function startPosition(e) {
+            drawing = true;
+            draw(e);
+        }
+
+        function endPosition() {
+            drawing = false;
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!drawing) return;
+            ctx.lineWidth = weightPicker.value;
+            ctx.strokeStyle = colorPicker.value;
+
+            // Handle touch vs mouse
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            ctx.lineTo(clientX - rect.left, clientY - rect.top);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(clientX - rect.left, clientY - rect.top);
+        }
+
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', endPosition);
+        canvas.addEventListener('mousemove', draw);
+
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startPosition(e); });
+        canvas.addEventListener('touchend', endPosition);
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); draw(e); });
+
+        btnClear.addEventListener('click', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            showToast("Canvas berhasil dibersihkan", "info");
+        });
+
+        // --- TERMINAL EMULATOR LOGIC ---
+        const terminalOutput = document.getElementById('terminal-output');
+        const terminalInput = document.getElementById('terminal-input');
+
+        function writeToTerminal(text, type = 'info') {
+            const line = document.createElement('div');
+            if (type === 'success') {
+                line.className = 'text-emerald-400';
+            } else if (type === 'error') {
+                line.className = 'text-red-400 font-bold';
+            } else if (type === 'warning') {
+                line.className = 'text-amber-400';
+            } else {
+                line.className = 'text-[#a9b1d6]';
+            }
+            line.innerHTML = text;
+            terminalOutput.appendChild(line);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+
+        terminalInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const cmd = terminalInput.value.trim();
+                if (cmd === '') return;
+                
+                writeToTerminal(`<span class="text-purple-400">nur-makrifat@indramayu-club:~$</span> ${cmd}`);
+                executeCommand(cmd.toLowerCase());
+                terminalInput.value = '';
+            }
+        });
+
+        function executeCommand(cmd) {
+            const parts = cmd.split(' ');
+            const baseCmd = parts[0];
+
+            switch(baseCmd) {
+                case 'help':
+                    writeToTerminal("Daftar Perintah Operasional:");
+                    writeToTerminal(" &bull; <span class='text-amber-300'>help</span>: Tampilkan bantuan.");
+                    writeToTerminal(" &bull; <span class='text-amber-300'>clear</span>: Bersihkan output terminal.");
+                    writeToTerminal(" &bull; <span class='text-amber-300'>status</span>: Periksa sinkronisasi OAuth & API.");
+                    writeToTerminal(" &bull; <span class='text-amber-300'>run-django</span>: Jalankan migrasi dan server Django local.");
+                    writeToTerminal(" &bull; <span class='text-amber-300'>ollama-test</span>: Uji koneksi ke Ollama AI Engine.");
+                    writeToTerminal(" &bull; <span class='text-amber-300'>push-global</span>: Tembak/Deploy perubahan HTML ke seluruh akun.");
+                    writeToTerminal(" &bull; <span class='text-amber-300'>hitung [koin] [kurs]</span>: Hitung cepat koin makrifat.");
+                    break;
+                case 'clear':
+                    terminalOutput.innerHTML = '';
+                    break;
+                case 'status':
+                    writeToTerminal(`[INFO] Project Active: ${oauthConfig.projectId}`, 'warning');
+                    writeToTerminal(`[INFO] Client ID: ${oauthConfig.clientId}`, 'warning');
+                    writeToTerminal(`[INFO] Terdaftar ${appletHistory.length} Applet dari repositori lokal.`, 'success');
+                    break;
+                case 'run-django':
+                    writeToTerminal("[MIGRATION] Menyiapkan database SQLite...", "info");
+                    setTimeout(() => writeToTerminal("[MIGRATION] !python manage.py makemigrations", "info"), 300);
+                    setTimeout(() => writeToTerminal("[MIGRATION] !python manage.py migrate", "info"), 600);
+                    setTimeout(() => writeToTerminal("[SERVER] Server berjalan pada http://localhost:8000/myapp/", "success"), 1000);
+                    break;
+                case 'ollama-test':
+                    triggerColabAction('test-connection');
+                    break;
+                case 'push-global':
+                    triggerColabAction('sync-global');
+                    break;
+                case 'hitung':
+                    const koin = parseFloat(parts[1]) || 100;
+                    const kurs = parseFloat(parts[2]) || 15000;
+                    writeToTerminal(`[HITUNG] Koin: ${koin} &bull; Kurs: Rp ${kurs} -> Total: <span class='text-amber-400 font-bold'>${formatRupiah(koin * kurs)}</span>`, 'success');
+                    break;
+                default:
+                    writeToTerminal(`Perintah <span class='text-red-400 font-bold'>"${baseCmd}"</span> tidak dikenal. Ketik <span class='text-amber-400'>help</span> untuk opsi bantuan.`, 'error');
+            }
+        }
+    </script>
+</body>
+  </html>
