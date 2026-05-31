@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="id" class="dark">
 <head>
@@ -80,7 +78,7 @@
     </nav>
 
     <!-- TOAST NOTIFIKASI -->
-    <div id="toast-notif" class="fixed top-20 left-1/2 -translate-x-1/2 bg-purple-950/95 border border-purple-500/50 px-5 py-3 rounded-2xl shadow-2xl z-50 text-xs text-center flex items-center gap-2 text-white transform translate-y-[-100px] opacity-0 transition-all duration-300 pointer-events-none">
+    <div id="toast-notif" class="fixed top-20 left-1/2 -translate-x-1/2 bg-purple-950/95 border border-purple-500/50 px-5 py-3 rounded-2xl shadow-2xl z-50 text-xs text-center flex items-center gap-2 opacity-0 pointer-events-none transition-all" style="transform: translateY(-100px);">
         <i id="toast-icon" class="fa-solid fa-info-circle text-purple-400 text-sm"></i>
         <span id="toast-message" class="font-bold"></span>
     </div>
@@ -108,11 +106,11 @@
                         <div class="space-y-3 text-xs">
                             <div>
                                 <label class="block text-slate-400 font-bold mb-1 uppercase text-[10px]">Jumlah Voucher / Koin</label>
-                                <input type="number" id="input-aset" value="100" class="w-full bg-[#161622] border border-purple-950/60 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500 font-mono">
+                                <input type="number" id="input-aset" value="100" class="w-full bg-[#161622] border border-purple-950/60 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-purple-500">
                             </div>
                             <div>
                                 <label class="block text-slate-400 font-bold mb-1 uppercase text-[10px]">Nilai Tukar Dasar (Kurs RpNUR)</label>
-                                <input type="number" id="input-kurs" value="15000" class="w-full bg-[#161622] border border-purple-950/60 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-amber-500 font-mono">
+                                <input type="number" id="input-kurs" value="15000" class="w-full bg-[#161622] border border-purple-950/60 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-purple-500">
                             </div>
 
                             <div class="grid grid-cols-4 gap-1.5 pt-1">
@@ -131,7 +129,7 @@
                         </div>
                     </div>
                     
-                    <button onclick="tembakKePangkalanPusat()" class="w-full mt-4 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-black py-3 rounded-xl transition-all uppercase tracking-wider shadow-lg text-[10px]">
+                    <button onclick="tembakKePangkalanPusat()" class="w-full mt-4 bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-400 hover:to-yellow-500 text-slate-950 font-black py-3 rounded-xl transition-all shadow-lg hover:shadow-xl">
                         <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Tembak Data Ke Sheet Nur 10
                     </button>
                 </div>
@@ -146,39 +144,41 @@
                             <div>
                                 <h3 class="text-xs font-black tracking-wider text-purple-400 uppercase">Integrasi Master V3</h3>
                                 <p class="text-[9px] text-slate-500 font-bold tracking-widest">SINKRONISASI AKTIF INDRAMAYU CLUB</p>
-                            </di909di90910 rounded-xl border border-purple-950/30 font-code text-[11px] text-slate-300 space-y-2">
-                                <div class="flex justify-between">
-                                    <span class="text-slate-500">Master Colab:</span>
-                                    <span class="text-indigo-400" id="status-colab">V3 Master Controller (.ipynb)</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-500">Framework:</span>
-                                    <span class="text-emerald-400">Django 5 + Python 3.11</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-500">Ollama AI:</span>
-                                    <span class="text-amber-400" id="status-ollama">Offline (Uji Terminal)</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-500">Redirect URI:</span>
-                                    <span class="text-slate-400 overflow-hidden text-ellipsis whitespace-nowrap max-w-[150px]" title="https://drive.google.com/drive/folders/1K-FvCNufZ2dnqMXZvFQGrt6Ler7i0l8D">.../drive/folders/1K-FvCN...</span>
-                                </div>
                             </div>
+                        </div>
 
-                            <div class="p-3 bg-purple-950/20 border border-purple-900/30 rounded-xl">
-                                <p class="text-[10px] text-purple-300 font-bold uppercase mb-1">Status Sesi Pengguna</p>
-                                <p class="text-[11px] text-slate-300 leading-relaxed">
-                                    Sistem terhubung menggunakan kredensial proyek <span class="text-yellow-400 font-mono font-bold">gen-lang-client-0594765231</span> untuk pemantauan jalur makrifat global.
-                                </p>
+                        <div class="p-3 bg-[#0a0a10] rounded-xl border border-purple-950/30 font-code text-[11px] text-slate-300 space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Master Colab:</span>
+                                <span class="text-indigo-400" id="status-colab">V3 Master Controller (.ipynb)</span>
                             </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Framework:</span>
+                                <span class="text-emerald-400">Django 5 + Python 3.11</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Ollama AI:</span>
+                                <span class="text-amber-400" id="status-ollama">Offline (Uji Terminal)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-500">Redirect URI:</span>
+                                <span class="text-slate-400 overflow-hidden text-ellipsis whitespace-nowrap max-w-[150px]" title="https://drive.google.com/drive/folders/1K-FvCNufZ2dnqMXZvFQGrt6Ler7i0l8D">drive.google.com/drive/folders...</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-purple-950/20 border border-purple-900/30 rounded-xl mt-3">
+                            <p class="text-[10px] text-purple-300 font-bold uppercase mb-1">Status Sesi Pengguna</p>
+                            <p class="text-[11px] text-slate-300 leading-relaxed">
+                                Sistem terhubung menggunakan kredensial proyek <span class="text-yellow-400 font-mono font-bold">gen-lang-client-0594765231</span> untuk pemantauan jalur makrifat global.
+                            </p>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-2 mt-4">
-                        <button onclick="triggerColabAction('test-connection')" class="bg-indigo-950/50 hover:bg-indigo-900/40 text-indigo-300 border border-indigo-900/40 font-bold py-2 rounded-xl transition-all text-[9px] uppercase tracking-wider">
+                        <button onclick="triggerColabAction('test-connection')" class="bg-indigo-950/50 hover:bg-indigo-900/40 text-indigo-300 border border-indigo-900/40 font-bold py-2 rounded-xl transition-all text-xs">
                             <i class="fa-solid fa-wifi mr-1"></i> Uji Koneksi AI
                         </button>
-                        <button onclick="triggerColabAction('sync-global')" class="bg-purple-950/50 hover:bg-purple-900/40 text-purple-300 border border-purple-900/40 font-bold py-2 rounded-xl transition-all text-[9px] uppercase tracking-wider">
+                        <button onclick="triggerColabAction('sync-global')" class="bg-purple-950/50 hover:bg-purple-900/40 text-purple-300 border border-purple-900/40 font-bold py-2 rounded-xl transition-all text-xs">
                             <i class="fa-solid fa-sync mr-1"></i> Sync Tema Global
                         </button>
                     </div>
@@ -194,7 +194,7 @@
                 <!-- DROP ZONE FILE SINKRONISASI -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     
-                    <div class="bg-[#11111b] border border-dashed border-purple-800/60 p-6 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-purple-500 transition-all group" id="dropzone-credentials">
+                    <div id="dropzone-credentials" class="bg-[#11111b] border border-dashed border-purple-800/60 p-6 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-purple-500 transition-all">
                         <i class="fa-solid fa-key text-3xl text-purple-500 group-hover:scale-110 transition-transform mb-3"></i>
                         <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-1">Unggah client_secret.json</h4>
                         <p class="text-[10px] text-slate-500 max-w-xs leading-relaxed">Seret atau klik untuk mengunggah file kredensial klien Google OAuth 2.0 Anda.</p>
@@ -204,7 +204,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-[#11111b] border border-dashed border-purple-800/60 p-6 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-purple-500 transition-all group" id="dropzone-history">
+                    <div id="dropzone-history" class="bg-[#11111b] border border-dashed border-purple-800/60 p-6 rounded-2xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-purple-500 transition-all">
                         <i class="fa-solid fa-clock-rotate-left text-3xl text-purple-500 group-hover:scale-110 transition-transform mb-3"></i>
                         <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-1">Unggah applet_access_history.json</h4>
                         <p class="text-[10px] text-slate-500 max-w-xs leading-relaxed">Seret atau klik untuk memetakan jalur log riwayat akses Applet dari server.</p>
@@ -272,7 +272,7 @@
                         </div>
 
                         <div class="pt-3 border-t border-purple-950/30 flex justify-end">
-                            <button onclick="syncAllSystems()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black px-4 py-2 rounded-xl text-[10px] uppercase tracking-wider transition-all">
+                            <button onclick="syncAllSystems()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black px-4 py-2 rounded-xl text-xs transition-all">
                                 <i class="fa-solid fa-arrows-spin mr-1"></i> Mulai Sinkronisasi Massal
                             </button>
                         </div>
@@ -736,4 +736,4 @@
         }
     </script>
 </body>
-  </html>
+</html>
